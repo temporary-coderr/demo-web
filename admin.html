@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>Admin</title></head><body style="background:#111;color:#fff;font-family:system-ui;padding:20px">
+<h2>Admin - Add Product</h2>
+<input id="img" placeholder="img link" style="width:100%;padding:10px;margin:5px 0"><br>
+<input id="name" placeholder="name" style="width:100%;padding:10px;margin:5px 0"><br>
+<input id="code" placeholder="code" style="width:100%;padding:10px;margin:5px 0"><br>
+<input id="price" placeholder="price" style="width:100%;padding:10px;margin:5px 0"><br>
+<input id="desc" placeholder="desc" style="width:100%;padding:10px;margin:5px 0"><br>
+<button onclick="post()" style="padding:12px;background:#4f7cff;color:#fff;width:100%">POST</button>
+<p id="s"></p>
+<script>
+const URL="https://api.npoint.io/6161fabf116efcde0e19";
+let list=[];
+fetch(URL+"?t="+Date.now()).then(r=>r.json()).then(d=>{list=d;document.getElementById('s').innerText=list.length+" loaded"});
+async function post(){
+ let o={img:img.value,name:name.value,code:code.value,price:price.value,desc:desc.value};
+ list.unshift(o);
+ let r=await fetch(URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(list)});
+ document.getElementById('s').innerText="Saved: "+r.status;
+}
+</script>
+</body></html>
